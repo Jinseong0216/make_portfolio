@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README 보기</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+        .section {
+            padding: 60px 0;
+        }
+        .section-title {
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            text-align: center;
+            color: #333;
+        }
+        .readme-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow-wrap: break-word; /* Break long lines */
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+    <!-- Marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">README</h2>
+            <div id="readmeContent" class="readme-content">
+                <p>로딩 중...</p>
+            </div>
+            <a id="repoLink" class="btn btn-primary mt-3" href="https://github.com/Jinseong0216/make_portfolio" target="_blank">GitHub 레포지토리로 가기</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 백엔드 개발자 | 디자인 및 개발자: [당신의 이름]</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // On page load, fetch and display the README content
+        document.addEventListener('DOMContentLoaded', function() {
+            const repo = 'Jinseong0216/make_portfolio';
+            const branch = 'master'; // Use 'master' branch
+            const readmeUrl = `https://raw.githubusercontent.com/${repo}/${branch}/README.md`;
+
+            // Fetch the README file content from the GitHub API
+            fetch(readmeUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    // Convert Markdown to HTML using Marked.js
+                    const html = marked.parse(text);
+                    document.getElementById('readmeContent').innerHTML = html;
+                })
+                .catch(error => {
+                    document.getElementById('readmeContent').innerText = 'README 파일을 불러오는 데 오류가 발생했습니다. ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
